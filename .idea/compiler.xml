@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="cz.smdev.bitcoind.main" target="1.8" />
+      <module name="cz.smdev.bitcoind.test" target="1.8" />
+      <module name="cz.smdev.core.main" target="1.8" />
+      <module name="cz.smdev.core.test" target="1.8" />
+      <module name="cz.smdev.xwallet-client.main" target="1.8" />
+      <module name="cz.smdev.xwallet-client.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

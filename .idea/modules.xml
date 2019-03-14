@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.iml" filepath="$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.test.iml" filepath="$PROJECT_DIR$/.idea/modules/bitcoind/cz.smdev.bitcoind.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/cz.smdev.core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.test.iml" />
+    </modules>
+  </component>
+</project>
