@@ -29,3 +29,19 @@ Kotlin library providing a simple abstract API for interacting with multiple cry
 	        implementation 'com.github.tomsmolik:xwallet-client:v1.0.0'
 	}
 ```
+## Maven dependencies:
+
+```maven
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+    
+	<dependency>
+	    <groupId>com.github.tomsmolik</groupId>
+	    <artifactId>xwallet-client</artifactId>
+	    <version>v1.0.0</version>
+	</dependency>
+```
