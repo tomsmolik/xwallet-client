@@ -2,7 +2,6 @@ buildscript {
 
     ext {
         kotlinVersion = '1.3.10'
-        springBootVersion = '2.1.0.RELEASE'
         fasterXmlJacksonVersion = '2.9.3'
         jsonrpc4jVersion = '1.5.2'
     }
@@ -15,7 +14,6 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath("gradle.plugin.org.jmailen.gradle:kotlinter-gradle:1.15.1")
@@ -31,11 +29,10 @@ allprojects {
 
     apply plugin: 'kotlin'
     apply plugin: 'kotlin-spring'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
     apply plugin: 'org.jmailen.kotlinter'
     apply plugin: 'org.ec4j.editorconfig'
-
+    
     sourceCompatibility = 1.8
 
     repositories {
