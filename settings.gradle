@@ -1,4 +1,4 @@
 rootProject.name = 'xwallet-client'
 
-include ':bitcoind'
-include ':core'
+include ':xwallet-bitcoin'
+include ':xwallet-core'

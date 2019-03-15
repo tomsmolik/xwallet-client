@@ -6,8 +6,12 @@
       <module name="cz.smdev.bitcoind.test" target="1.8" />
       <module name="cz.smdev.core.main" target="1.8" />
       <module name="cz.smdev.core.test" target="1.8" />
+      <module name="cz.smdev.xwallet-bitcoin.main" target="1.8" />
+      <module name="cz.smdev.xwallet-bitcoin.test" target="1.8" />
       <module name="cz.smdev.xwallet-client.main" target="1.8" />
       <module name="cz.smdev.xwallet-client.test" target="1.8" />
+      <module name="cz.smdev.xwallet-core.main" target="1.8" />
+      <module name="cz.smdev.xwallet-core.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

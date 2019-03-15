@@ -1,8 +1,0 @@
-description = 'Project Module - Bitcoind RPC API Client'
-
-dependencies {
-
-    implementation("com.github.briandilley.jsonrpc4j:jsonrpc4j:${jsonrpc4jVersion}")
-    
-    implementation project(':core')
-}
