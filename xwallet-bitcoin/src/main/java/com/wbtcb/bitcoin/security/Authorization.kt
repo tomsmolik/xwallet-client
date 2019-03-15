@@ -1,6 +1,6 @@
 package com.wbtcb.bitcoin.security
 
-import java.util.*
+import java.util.Base64
 
 class Authorization(
     private val user: String,
