@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="com.wbtcb.xwallet-bitcoin.main" target="1.8" />
+      <module name="com.wbtcb.xwallet-bitcoin.test" target="1.8" />
+      <module name="com.wbtcb.xwallet-client.main" target="1.8" />
+      <module name="com.wbtcb.xwallet-client.test" target="1.8" />
+      <module name="com.wbtcb.xwallet-core.main" target="1.8" />
+      <module name="com.wbtcb.xwallet-core.test" target="1.8" />
       <module name="cz.smdev.bitcoind.main" target="1.8" />
       <module name="cz.smdev.bitcoind.test" target="1.8" />
       <module name="cz.smdev.core.main" target="1.8" />

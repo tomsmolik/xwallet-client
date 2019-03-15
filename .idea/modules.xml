@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/cz.smdev.xwallet-bitcoin.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cz.smdev.xwallet-client.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/cz.smdev.xwallet-core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-bitcoin/com.wbtcb.xwallet-bitcoin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.iml" filepath="$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.wbtcb.xwallet-client.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/xwallet-core/com.wbtcb.xwallet-core.test.iml" />
     </modules>
   </component>
 </project>
