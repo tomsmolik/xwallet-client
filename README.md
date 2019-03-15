@@ -1,6 +1,6 @@
 # xwallet
 
-Kotlin library providing a abstract API for interacting with multiple crypto wallet core.
+Kotlin library providing a simple abstract API for interacting with multiple crypto wallet core.
 
 ## Usage:
 
