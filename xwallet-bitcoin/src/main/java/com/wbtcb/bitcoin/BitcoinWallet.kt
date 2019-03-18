@@ -1,21 +1,20 @@
 package com.wbtcb.bitcoin
 
-import com.wbtcb.core.Wallet
-import com.wbtcb.core.BaseWallet
-import com.wbtcb.core.WalletSpecification
-import com.wbtcb.core.service.wallet.WalletService
+import com.wbtcb.core.WalletCore
+import com.wbtcb.core.BaseWalletCore
+import com.wbtcb.core.WalletCoreSpecification
+import com.wbtcb.core.service.wallet.WalletCoreService
 import com.wbtcb.bitcoin.service.BitcoinWalletService
+import com.wbtcb.core.enum.WalletCurrency
 
-import com.wbtcb.core.enum.Currency
+class BitcoinWallet : BaseWalletCore(), WalletCore {
 
-class BitcoinWallet : BaseWallet(), Wallet {
+    override var walletCurrency: WalletCurrency = WalletCurrency.BTC
 
-    override var currency: Currency = Currency.BTC
+    override var walletCoreService: WalletCoreService = BitcoinWalletService(this)
 
-    override var walletService: WalletService = BitcoinWalletService(this)
-
-    override fun defaultWalletSpecification(): WalletSpecification {
-        return WalletSpecification(
+    override fun defaultWalletSpecification(): WalletCoreSpecification {
+        return WalletCoreSpecification(
             host = "localhost",
             port = "18332"
         )

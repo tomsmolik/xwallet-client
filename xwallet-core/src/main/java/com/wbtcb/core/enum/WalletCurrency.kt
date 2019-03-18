@@ -1,5 +1,5 @@
 package com.wbtcb.core.enum
 
-enum class Currency {
+enum class WalletCurrency {
     BTC
 }

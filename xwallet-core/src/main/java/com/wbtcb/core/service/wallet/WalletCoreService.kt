@@ -8,7 +8,7 @@ import com.wbtcb.core.service.BaseService
 import java.io.IOException
 import java.math.BigDecimal
 
-interface WalletService : BaseService {
+interface WalletCoreService : BaseService {
 
     /**
      * Provides information about the wallet.

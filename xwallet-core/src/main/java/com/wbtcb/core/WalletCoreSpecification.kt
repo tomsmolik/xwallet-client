@@ -1,6 +1,6 @@
 package com.wbtcb.core
 
-data class WalletSpecification(
+data class WalletCoreSpecification(
     var user: String = "",
     var password: String = "",
     var host: String = "",

@@ -3,17 +3,17 @@ package com.wbtcb.bitcoin.service
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
-import com.wbtcb.core.Wallet
+import com.wbtcb.core.WalletCore
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.TransactionInput
 import com.wbtcb.core.dto.TransactionOutput
 import com.wbtcb.core.dto.WalletInfo
-import com.wbtcb.core.service.wallet.WalletService
+import com.wbtcb.core.service.wallet.WalletCoreService
 
 import java.math.BigDecimal
 
-class BitcoinWalletService(wallet: Wallet) : BitcoinWalletServiceRaw(wallet), WalletService {
+class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet), WalletCoreService {
 
     override fun unlockWallet(passphrase: String, timeoutSec: Long) {
         unlockBitcoinWallet(passphrase, timeoutSec)

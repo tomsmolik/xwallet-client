@@ -5,11 +5,11 @@ import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
-import com.wbtcb.core.Wallet
+import com.wbtcb.core.WalletCore
 
 import java.math.BigDecimal
 
-open class BitcoinWalletServiceRaw(wallet: Wallet) : BitcoinBaseService(wallet) {
+open class BitcoinWalletServiceRaw(wallet: WalletCore) : BitcoinBaseService(wallet) {
 
     fun unlockBitcoinWallet(passphrase: String, timeoutSec: Long) {
         bitcoinRpcClient.walletPassphrase(passphrase, timeoutSec)
