@@ -1,6 +1,7 @@
 package com.wbtcb.bitcoin.service
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
@@ -57,5 +58,17 @@ open class BitcoinWalletServiceRaw(wallet: WalletCore) : BitcoinBaseService(wall
 
     fun getBitcoinTransactionInfo(txId: String): BitcoinTransactionInfo {
         return bitcoinRpcClient.getWalletTransaction(txId)
+    }
+
+    fun verifyBitcoinChain(checkLevel: Int, numBlocks: Int): Boolean {
+        return bitcoinRpcClient.verifyChain(checkLevel, numBlocks)
+    }
+
+    fun bitcoinKeyPoolRefill() {
+        bitcoinRpcClient.keyPoolRefill()
+    }
+
+    fun estimateBitcoinSmartFee(minConfirmations: Long): BitcoinSmartFee {
+        return bitcoinRpcClient.estimateSmartFee(minConfirmations)
     }
 }

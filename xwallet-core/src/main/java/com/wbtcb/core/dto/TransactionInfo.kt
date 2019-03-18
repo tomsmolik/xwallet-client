@@ -14,6 +14,7 @@ data class TransactionInfo(
     var time: Date? = null,
     var timeReceived: Date? = null,
     var comment: String? = null,
+    var conflictTxIds: List<String>? = emptyList(),
     var inputs: List<TransactionInput> = emptyList(),
     var outputs: List<TransactionOutput> = emptyList()
 )

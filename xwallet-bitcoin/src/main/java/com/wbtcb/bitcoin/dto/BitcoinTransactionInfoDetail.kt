@@ -10,5 +10,5 @@ data class BitcoinTransactionInfoDetail(
     val amount: BigDecimal = BigDecimal.ZERO,
     val category: BitcoinCategoryType? = null,
     val fee: BigDecimal? = null,
-    val vout: Long? = null
+    val vout: Long = 0
 )

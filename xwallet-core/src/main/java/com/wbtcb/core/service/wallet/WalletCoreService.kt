@@ -58,6 +58,16 @@ interface WalletCoreService : BaseService {
     }
 
     /**
+     * Estimates the approximate fee per byte
+     * @return estimate fee rate per byte
+     * @throws IOException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(IOException::class)
+    fun estimateSmartFee(minConfirmations: Long = 1): BigDecimal {
+        throw NotImplementedError()
+    }
+
+    /**
      * Get a new address that can be used to receive funds. The address will be associated with the default account.
      *
      * @return new address
@@ -166,6 +176,36 @@ interface WalletCoreService : BaseService {
      */
     @Throws(IOException::class)
     fun getTransactionInfo(txId: String): TransactionInfo {
+        throw NotImplementedError()
+    }
+
+    /**
+     *  Verifies each entry in the local block chain database.
+     *
+     * Chain levels:
+     * 0. Read from disk to ensure the files are accessible
+     * 1. Ensure each block is valid
+     * 2. Make sure undo files can be read from disk and are in a valid format
+     * 3. Test each block undo to ensure it results in correct state
+     * 4. After undoing blocks, reconnect them to ensure they reconnect correctly
+     *
+     * @param checkLevel 0-4, default 3
+     * @param numBlocks 0 = all, default 288
+     * @return True if verified. False if verification failed for any reason
+     * @throws IOException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(IOException::class)
+    fun verifyChain(checkLevel: Int = 3, numBlocks: Int = 288): Boolean {
+        throw NotImplementedError()
+    }
+
+    /**
+     *  Fills the cache of unused pre-generated keys (the keypool).
+     *
+     * @throws IOException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(IOException::class)
+    fun keyPoolRefill() {
         throw NotImplementedError()
     }
 }

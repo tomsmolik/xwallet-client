@@ -17,5 +17,6 @@ data class BitcoinTransactionInfo(
     val time: Date? = null,
     val timereceived: Date? = null,
     val comment: String? = null,
+    val walletconflicts: List<String>? = null,
     val details: List<BitcoinTransactionInfoDetail>? = null
 )

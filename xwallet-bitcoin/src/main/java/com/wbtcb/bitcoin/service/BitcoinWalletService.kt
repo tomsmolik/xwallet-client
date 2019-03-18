@@ -46,6 +46,10 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
         return setBitcoinWalletTransactionFee(fee)
     }
 
+    override fun estimateSmartFee(minConfirmations: Long): BigDecimal {
+        return estimateBitcoinSmartFee(minConfirmations).feerate
+    }
+
     override fun getNewAddress(): String {
         return getNewBitcoinAddress()
     }
@@ -105,10 +109,19 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
                 time = transaction.time,
                 timeReceived = transaction.timereceived,
                 comment = transaction.comment,
+                conflictTxIds = transaction.walletconflicts,
                 inputs = getTransactionInputs(transaction.details),
                 outputs = getTransactionOutputs(transaction.details)
             )
         }
+    }
+
+    override fun verifyChain(checkLevel: Int, numBlocks: Int): Boolean {
+        return verifyBitcoinChain(checkLevel, numBlocks)
+    }
+
+    override fun keyPoolRefill() {
+        bitcoinKeyPoolRefill()
     }
 
     private fun getTransactionInputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionInput> {
@@ -117,7 +130,8 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
                 if (detail.category == BitcoinCategoryType.receive) {
                     add(TransactionInput(
                         detail.address,
-                        detail.amount
+                        detail.amount,
+                        detail.vout
                     ))
                 }
             }
@@ -130,7 +144,8 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
                 if (detail.category == BitcoinCategoryType.send) {
                     add(TransactionOutput(
                         detail.address,
-                        detail.amount
+                        detail.amount,
+                        detail.vout
                     ))
                 }
             }
