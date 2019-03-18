@@ -27,7 +27,7 @@ Kotlin library providing a simple abstract API for interacting with multiple cry
 	}
     
 	dependencies {
-	        implementation 'com.github.tomsmolik:xwallet-client:v1.1'
+	        implementation 'com.github.tomsmolik:xwallet-client:$version'
 	}
 ```
 ## Maven dependencies:
@@ -43,6 +43,6 @@ Kotlin library providing a simple abstract API for interacting with multiple cry
 	<dependency>
 	    <groupId>com.github.tomsmolik</groupId>
 	    <artifactId>xwallet-client</artifactId>
-	    <version>v1.1</version>
+	    <version>version</version>
 	</dependency>
 ```
