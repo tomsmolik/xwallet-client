@@ -1,6 +1,8 @@
 package com.wbtcb.bitcoin.service
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinTransaction
+import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
 import com.wbtcb.core.Wallet
@@ -47,5 +49,13 @@ open class BitcoinWalletServiceRaw(wallet: Wallet) : BitcoinBaseService(wallet) 
 
     fun sendBitcoinToAddress(address: String, amount: BigDecimal, comment: String?, commentTo: String?): String {
         return bitcoinRpcClient.sendToAddress(address = address, amount = amount, comment = comment, commentTo = commentTo)
+    }
+
+    fun getBitcoinTransactions(limit: Int, offset: Int): List<BitcoinTransaction> {
+        return bitcoinRpcClient.listTransactions(count = limit, from = offset)
+    }
+
+    fun getBitcoinTransactionInfo(txId: String): BitcoinTransactionInfo {
+        return bitcoinRpcClient.getWalletTransaction(txId)
     }
 }

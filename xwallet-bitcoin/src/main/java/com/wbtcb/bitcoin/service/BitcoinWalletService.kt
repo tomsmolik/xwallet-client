@@ -1,7 +1,13 @@
 package com.wbtcb.bitcoin.service
 
+import com.wbtcb.bitcoin.dto.BitcoinCategoryType
+import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.core.Wallet
+import com.wbtcb.core.dto.Transaction
+import com.wbtcb.core.dto.TransactionInfo
+import com.wbtcb.core.dto.TransactionInput
+import com.wbtcb.core.dto.TransactionOutput
 import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.service.wallet.WalletService
 
@@ -66,6 +72,69 @@ class BitcoinWalletService(wallet: Wallet) : BitcoinWalletServiceRaw(wallet), Wa
 
     override fun sendToAddress(address: String, amount: BigDecimal, comment: String?, commentTo: String?): String {
         return sendBitcoinToAddress(address, amount, comment, commentTo)
+    }
+
+    override fun getTransactions(limit: Int, offset: Int): List<Transaction> {
+        return getBitcoinTransactions(limit, offset).map { transaction ->
+            Transaction().copy(
+                txId = transaction.txid,
+                address = transaction.address!!,
+                amount = transaction.amount!!,
+                fee = transaction.fee,
+                vout = transaction.vout,
+                confirmations = transaction.confirmations,
+                blockHash = transaction.blockhash,
+                blockIndex = transaction.blockindex,
+                blockTime = transaction.blocktime,
+                time = transaction.time,
+                timeReceived = transaction.timereceived
+            )
+        }
+    }
+
+    override fun getTransactionInfo(txId: String): TransactionInfo {
+        return getBitcoinTransactionInfo(txId).let { transaction ->
+            TransactionInfo().copy(
+                txId = transaction.txid,
+                amount = transaction.amount,
+                fee = transaction.fee,
+                confirmations = transaction.confirmations,
+                blockHash = transaction.blockhash,
+                blockIndex = transaction.blockindex,
+                blockTime = transaction.blocktime,
+                time = transaction.time,
+                timeReceived = transaction.timereceived,
+                comment = transaction.comment,
+                inputs = getTransactionInputs(transaction.details),
+                outputs = getTransactionOutputs(transaction.details)
+            )
+        }
+    }
+
+    private fun getTransactionInputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionInput> {
+        return arrayListOf<TransactionInput>().apply {
+            details?.map { detail ->
+                if (detail.category == BitcoinCategoryType.receive) {
+                    add(TransactionInput(
+                        detail.address,
+                        detail.amount
+                    ))
+                }
+            }
+        }
+    }
+
+    private fun getTransactionOutputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionOutput> {
+        return arrayListOf<TransactionOutput>().apply {
+            details?.map { detail ->
+                if (detail.category == BitcoinCategoryType.send) {
+                    add(TransactionOutput(
+                        detail.address,
+                        detail.amount
+                    ))
+                }
+            }
+        }
     }
 
     private fun getBalanceFromUnspentTransactions(unspentTransactions: List<BitcoinUnspentTransaction>): BigDecimal {

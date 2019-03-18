@@ -6,8 +6,10 @@ import com.googlecode.jsonrpc4j.JsonRpcMethod
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
 import com.wbtcb.bitcoin.dto.BitcoinFeeEstimateMode
 import com.wbtcb.bitcoin.dto.BitcoinQueryOptions
+import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
+import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 
 import java.math.BigDecimal
 
@@ -71,4 +73,16 @@ interface BitcoinRpcClient {
         minConfirmations: Int? = null,
         feeEstimateMode: BitcoinFeeEstimateMode? = null
     ): String
+
+    @JsonRpcMethod("listtransactions")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun listTransactions(
+        account: String = "*",
+        count: Int? = null,
+        from: Int? = null
+    ): List<BitcoinTransaction>
+
+    @JsonRpcMethod("gettransaction")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun getWalletTransaction(txId: String): BitcoinTransactionInfo
 }

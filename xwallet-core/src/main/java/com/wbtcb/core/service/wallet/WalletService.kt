@@ -1,5 +1,7 @@
 package com.wbtcb.core.service.wallet
 
+import com.wbtcb.core.dto.Transaction
+import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.service.BaseService
 
@@ -139,6 +141,31 @@ interface WalletService : BaseService {
      */
     @Throws(IOException::class)
     fun sendToAddress(address: String, amount: BigDecimal, comment: String? = null, commentTo: String? = null): String {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Returns the most recent transactions that affect the wallet.
+     *
+     * @param limit The number of the most recent transactions to list.
+     * @param offset The number of the most recent transactions which should not be returned.
+     * @return Most recent transactions that affect the wallet
+     * @throws IOException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(IOException::class)
+    fun getTransactions(limit: Int, offset: Int): List<Transaction> {
+        throw NotImplementedError()
+    }
+
+    /**
+     *  Gets detailed information about an in-wallet transaction.
+     *
+     * @param txId id of the transaction to get details about
+     * @return Detailed information about an in-wallet transaction
+     * @throws IOException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(IOException::class)
+    fun getTransactionInfo(txId: String): TransactionInfo {
         throw NotImplementedError()
     }
 }
