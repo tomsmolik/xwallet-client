@@ -3,9 +3,9 @@ package com.wbtcb.core.service.wallet
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.WalletInfo
+import com.wbtcb.core.exeption.WalletCoreException
 import com.wbtcb.core.service.BaseService
 
-import java.io.IOException
 import java.math.BigDecimal
 
 interface WalletCoreService : BaseService {
@@ -14,9 +14,9 @@ interface WalletCoreService : BaseService {
      * Provides information about the wallet.
      *
      * @return information about the wallet
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getWalletInfo(): WalletInfo {
         throw NotImplementedError()
     }
@@ -27,9 +27,9 @@ interface WalletCoreService : BaseService {
      *
      * @param passphrase the passphrase that unlocks the wallet
      * @param timeoutSec the number of seconds after which the decryption key will be automatically deleted from memory
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun unlockWallet(passphrase: String, timeoutSec: Long) {
         throw NotImplementedError()
     }
@@ -38,9 +38,9 @@ interface WalletCoreService : BaseService {
      * Lock the wallet and purge the key from memory. The wallet must be encrypted first. Functions changing the wallet
      * can't be used until walletPassphrase is called after calling lock.
      *
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun lockWallet() {
         throw NotImplementedError()
     }
@@ -50,9 +50,9 @@ interface WalletCoreService : BaseService {
      *
      * @param fee the fee to set
      * @return true if the fee was successfully set
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun setWalletTransactionFee(fee: BigDecimal): Boolean {
         throw NotImplementedError()
     }
@@ -60,9 +60,9 @@ interface WalletCoreService : BaseService {
     /**
      * Estimates the approximate fee per byte
      * @return estimate fee rate per byte
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun estimateSmartFee(minConfirmations: Long = 1): BigDecimal {
         throw NotImplementedError()
     }
@@ -71,9 +71,9 @@ interface WalletCoreService : BaseService {
      * Get a new address that can be used to receive funds. The address will be associated with the default account.
      *
      * @return new address
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getNewAddress(): String {
         throw NotImplementedError()
     }
@@ -83,9 +83,9 @@ interface WalletCoreService : BaseService {
      *
      * @param address address to validate
      * @return true if the address is a valid
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun isAddressValid(address: String): Boolean {
         throw NotImplementedError()
     }
@@ -95,9 +95,9 @@ interface WalletCoreService : BaseService {
      *
      * @param minConfirmations minimal confirmations
      * @return the wallet balance
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getWalletBalance(minConfirmations: Long = 1): BigDecimal {
         throw NotImplementedError()
     }
@@ -106,9 +106,9 @@ interface WalletCoreService : BaseService {
      * Get unconfirmed balance in the wallet.
      *
      * @return the wallet unconfirmed balance
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getWalletUnconfirmedBalance(): BigDecimal {
         throw NotImplementedError()
     }
@@ -119,9 +119,9 @@ interface WalletCoreService : BaseService {
      * @param address the address
      * @param minConfirmations minimal confirmations
      * @return the address balance
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getAddressBalance(address: String, minConfirmations: Long = 1): BigDecimal {
         throw NotImplementedError()
     }
@@ -132,9 +132,9 @@ interface WalletCoreService : BaseService {
      * @param addresses the addresses
      * @param minConfirmations minimal confirmations
      * @return the balance of the addresses
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getAddressesBalance(addresses: List<String>, minConfirmations: Long = 1): BigDecimal {
         throw NotImplementedError()
     }
@@ -147,9 +147,9 @@ interface WalletCoreService : BaseService {
      * @param comment a locally-stored (not broadcast) comment assigned to this transaction
      * @param commentTo a locally-stored (not broadcast) comment assigned to this transaction.
      * @return The transaction id of the sent transaction, encoded as hex
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun sendToAddress(address: String, amount: BigDecimal, comment: String? = null, commentTo: String? = null): String {
         throw NotImplementedError()
     }
@@ -160,9 +160,9 @@ interface WalletCoreService : BaseService {
      * @param limit The number of the most recent transactions to list.
      * @param offset The number of the most recent transactions which should not be returned.
      * @return Most recent transactions that affect the wallet
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getTransactions(limit: Int, offset: Int): List<Transaction> {
         throw NotImplementedError()
     }
@@ -172,9 +172,9 @@ interface WalletCoreService : BaseService {
      *
      * @param txId id of the transaction to get details about
      * @return Detailed information about an in-wallet transaction
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun getTransactionInfo(txId: String): TransactionInfo {
         throw NotImplementedError()
     }
@@ -192,9 +192,9 @@ interface WalletCoreService : BaseService {
      * @param checkLevel 0-4, default 3
      * @param numBlocks 0 = all, default 288
      * @return True if verified. False if verification failed for any reason
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun verifyChain(checkLevel: Int = 3, numBlocks: Int = 288): Boolean {
         throw NotImplementedError()
     }
@@ -202,9 +202,9 @@ interface WalletCoreService : BaseService {
     /**
      *  Fills the cache of unused pre-generated keys (the keypool).
      *
-     * @throws IOException indication that a networking error occurred while fetching JSON data
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
      */
-    @Throws(IOException::class)
+    @Throws(WalletCoreException::class)
     fun keyPoolRefill() {
         throw NotImplementedError()
     }
