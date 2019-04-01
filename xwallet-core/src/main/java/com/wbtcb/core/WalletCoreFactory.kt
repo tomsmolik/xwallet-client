@@ -1,15 +1,18 @@
 package com.wbtcb.core
 
 import java.lang.IllegalArgumentException
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.isSubclassOf
 
 object WalletCoreFactory {
 
     @Suppress("UNCHECKED_CAST")
     fun createWallet(walletClassName: String, walletSpecification: WalletCoreSpecification? = null): WalletCore {
         try {
-            val walletProviderClass = Class.forName(walletClassName)
-            if (WalletCore::class.java.isAssignableFrom(walletProviderClass)) {
-                return createWallet((walletProviderClass as Class<WalletCore>), walletSpecification)
+            val walletProviderClass = Class.forName(walletClassName).kotlin
+            if (walletProviderClass.isSubclassOf(WalletCore::class)) {
+                return createWallet((walletProviderClass as KClass<WalletCore>), walletSpecification)
             }
             throw IllegalArgumentException("Class '$walletClassName' does not implement WalletCore")
         } catch (e: ClassNotFoundException) {
@@ -17,13 +20,13 @@ object WalletCoreFactory {
         }
     }
 
-    fun <W : WalletCore> createWallet(walletClass: Class<W>, walletSpecification: WalletCoreSpecification? = null): W {
+    fun <W : WalletCore> createWallet(walletClass: KClass<W>, walletSpecification: WalletCoreSpecification? = null): W {
         return createInstance(walletClass).apply {
             applySpecification(walletSpecification ?: defaultWalletSpecification())
         }
     }
 
-    private fun <W : WalletCore> createInstance(walletClass: Class<W>): W {
-        return walletClass.newInstance()
+    private fun <W : WalletCore> createInstance(walletClass: KClass<W>): W {
+        return walletClass.createInstance()
     }
 }
