@@ -13,7 +13,7 @@ import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.service.wallet.WalletCoreService
 import java.math.BigDecimal
 
-class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet), WalletCoreService {
+class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), WalletCoreService {
 
     override fun unlockWallet(passphrase: String, timeoutSec: Long) {
         unlockBitcoinWallet(passphrase, timeoutSec)

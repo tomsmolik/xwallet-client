@@ -4,11 +4,9 @@ import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.exeption.WalletCoreException
-import com.wbtcb.core.service.BaseService
-
 import java.math.BigDecimal
 
-interface WalletCoreService : BaseService {
+interface WalletCoreService {
 
     /**
      * Provides information about the wallet.

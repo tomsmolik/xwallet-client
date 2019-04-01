@@ -7,7 +7,7 @@ import com.wbtcb.bitcoin.util.DateUtil.epochToDate
 import java.io.IOException
 import java.util.Date
 
-internal class UnixTimestampDeserializer : JsonDeserializer<Date>() {
+class UnixTimestampDeserializer : JsonDeserializer<Date>() {
 
     @Throws(IOException::class)
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Date = try {
