@@ -37,6 +37,9 @@
               <option value="$KOTLIN_BUNDLED$/lib/allopen-compiler-plugin.jar" />
             </array>
           </option>
+          <option name="errors">
+            <ArgumentParseErrors />
+          </option>
         </compilerArguments>
       </configuration>
     </facet>
@@ -49,5 +52,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="com.wbtcb.xwallet-client.main" />
   </component>
-  <component name="TestModuleProperties" production-module="com.wbtcb.xwallet-client.main" />
+  <component name="TestModuleProperties" production-module="xwallet-client.main" />
 </module>

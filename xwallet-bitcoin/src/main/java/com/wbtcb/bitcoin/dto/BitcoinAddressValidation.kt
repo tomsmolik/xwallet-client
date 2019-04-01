@@ -1,12 +1,14 @@
 package com.wbtcb.bitcoin.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BitcoinAddressValidation(
-    val isvalid: Boolean = false,
-    val address: String? = null,
-    val scriptPubKey: String? = null,
-    val isscript: String? = null,
-    val iswitness: String? = null
+
+    @JsonProperty("isvalid")
+    val isValid: Boolean,
+
+    @JsonProperty("address")
+    val address: String
 )

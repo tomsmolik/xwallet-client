@@ -19,11 +19,7 @@ object WalletCoreFactory {
 
     fun <W : WalletCore> createWallet(walletClass: Class<W>, walletSpecification: WalletCoreSpecification? = null): W {
         return createInstance(walletClass).apply {
-            walletSpecification?.let {
-                applySpecification(it)
-            } ?: run {
-                applySpecification(defaultWalletSpecification())
-            }
+            applySpecification(walletSpecification ?: defaultWalletSpecification())
         }
     }
 

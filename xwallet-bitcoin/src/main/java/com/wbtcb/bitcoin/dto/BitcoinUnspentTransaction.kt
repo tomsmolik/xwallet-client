@@ -1,20 +1,21 @@
 package com.wbtcb.bitcoin.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BitcoinUnspentTransaction(
-    val txid: String? = null,
-    val vout: Int? = null,
-    val label: String? = null,
-    val address: String? = null,
-    val scriptPubKey: String? = null,
-    val amount: BigDecimal = BigDecimal.ZERO,
-    val confirmations: Int? = null,
-    val redeemScript: String? = null,
-    val spendable: Boolean? = null,
-    val solvable: Boolean? = null,
-    val safe: Boolean? = null
+
+    @JsonProperty("txid")
+    val txId: String,
+
+    @JsonProperty("address")
+    val address: String,
+
+    @JsonProperty("amount")
+    val amount: BigDecimal,
+
+    @JsonProperty("confirmations")
+    val confirmations: Int
 )

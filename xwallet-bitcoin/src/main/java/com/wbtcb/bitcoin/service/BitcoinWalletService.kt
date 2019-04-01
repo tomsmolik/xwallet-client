@@ -1,6 +1,7 @@
 package com.wbtcb.bitcoin.service
 
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType
+import com.wbtcb.bitcoin.dto.BitcoinCategoryType.Companion.toTransactionType
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.core.WalletCore
@@ -10,7 +11,6 @@ import com.wbtcb.core.dto.TransactionInput
 import com.wbtcb.core.dto.TransactionOutput
 import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.service.wallet.WalletCoreService
-
 import java.math.BigDecimal
 
 class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet), WalletCoreService {
@@ -25,19 +25,18 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
 
     override fun getWalletInfo(): WalletInfo {
         getBitcoinWalletInfo().let { info ->
-            return WalletInfo().copy(
-                walletName = info.walletname,
-                walletVersion = info.walletversion,
+            return WalletInfo(
+                walletName = info.walletName,
+                walletVersion = info.walletVersion,
                 balance = info.balance,
-                unconfirmedBalance = info.unconfirmed_balance,
-                immatureBalance = info.immature_balance,
-                txCount = info.txcount,
-                keyPoolOldest = info.keypoololdest,
-                keyPoolSize = info.keypoolsize,
-                keyPoolSizeHdInternal = info.keypoolsize_hd_internal,
-                unlockedUntil = info.unlocked_until,
-                payTxFee = info.paytxfee,
-                hdMasterKeyId = info.hdmasterkeyid
+                unconfirmedBalance = info.unconfirmedBalance,
+                immatureBalance = info.immatureBalance,
+                txCount = info.txCount,
+                keyPoolOldest = info.keyPoolOldest,
+                keyPoolSize = info.keyPoolSize,
+                keyPoolSizeHdInternal = info.keyPoolSizeHdInternal,
+                unlockedUntil = info.unlockedUntil,
+                payTxFee = info.payTxFee
             )
         }
     }
@@ -47,7 +46,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
     }
 
     override fun estimateSmartFee(minConfirmations: Long): BigDecimal {
-        return estimateBitcoinSmartFee(minConfirmations).feerate
+        return estimateBitcoinSmartFee(minConfirmations).feeRate
     }
 
     override fun getNewAddress(): String {
@@ -55,7 +54,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
     }
 
     override fun isAddressValid(address: String): Boolean {
-        return isBitcoinAddressValid(address).isvalid
+        return isBitcoinAddressValid(address).isValid
     }
 
     override fun getWalletBalance(minConfirmations: Long): BigDecimal {
@@ -80,36 +79,42 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
 
     override fun getTransactions(limit: Int, offset: Int): List<Transaction> {
         return getBitcoinTransactions(limit, offset).map { transaction ->
-            Transaction().copy(
-                txId = transaction.txid,
-                address = transaction.address!!,
-                amount = transaction.amount!!,
+            Transaction(
+                txId = transaction.txId,
+                address = transaction.address,
+                type = transaction.category.toTransactionType(),
+                amount = transaction.amount,
                 fee = transaction.fee,
                 vout = transaction.vout,
                 confirmations = transaction.confirmations,
-                blockHash = transaction.blockhash,
-                blockIndex = transaction.blockindex,
-                blockTime = transaction.blocktime,
+                blockHash = transaction.blockHash,
+                blockIndex = transaction.blockIndex,
+                comment = transaction.comment,
+                commentTo = transaction.commentTo,
+                otherAccount = transaction.otherAccount,
                 time = transaction.time,
-                timeReceived = transaction.timereceived
+                blockTime = transaction.blockTime,
+                timeReceived = transaction.timeReceived,
+                walletConflicts = transaction.walletConflicts
             )
         }
     }
 
     override fun getTransactionInfo(txId: String): TransactionInfo {
         return getBitcoinTransactionInfo(txId).let { transaction ->
-            TransactionInfo().copy(
-                txId = transaction.txid,
+            TransactionInfo(
+                txId = transaction.txId,
                 amount = transaction.amount,
                 fee = transaction.fee,
                 confirmations = transaction.confirmations,
-                blockHash = transaction.blockhash,
-                blockIndex = transaction.blockindex,
-                blockTime = transaction.blocktime,
-                time = transaction.time,
-                timeReceived = transaction.timereceived,
+                blockHash = transaction.blockHash,
+                blockIndex = transaction.blockIndex,
                 comment = transaction.comment,
-                conflictTxIds = transaction.walletconflicts,
+                commentTo = transaction.commentTo,
+                time = transaction.time,
+                blockTime = transaction.blockTime,
+                timeReceived = transaction.timeReceived,
+                walletConflicts = transaction.walletConflicts,
                 inputs = getTransactionInputs(transaction.details),
                 outputs = getTransactionOutputs(transaction.details)
             )
@@ -127,7 +132,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
     private fun getTransactionInputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionInput> {
         return arrayListOf<TransactionInput>().apply {
             details?.map { detail ->
-                if (detail.category == BitcoinCategoryType.receive) {
+                if (detail.category == BitcoinCategoryType.RECEIVE) {
                     add(TransactionInput(
                         detail.address,
                         detail.amount,
@@ -141,7 +146,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinWalletServiceRaw(wallet)
     private fun getTransactionOutputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionOutput> {
         return arrayListOf<TransactionOutput>().apply {
             details?.map { detail ->
-                if (detail.category == BitcoinCategoryType.send) {
+                if (detail.category == BitcoinCategoryType.SEND) {
                     add(TransactionOutput(
                         detail.address,
                         detail.amount,

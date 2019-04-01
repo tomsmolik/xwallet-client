@@ -1,11 +1,15 @@
 package com.wbtcb.bitcoin.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BitcoinSmartFee(
-    val feerate: BigDecimal = BigDecimal.ZERO,
-    val blocks: Long = 0
+
+    @JsonProperty("feerate")
+    val feeRate: BigDecimal,
+
+    @JsonProperty("blocks")
+    val blocks: Long
 )

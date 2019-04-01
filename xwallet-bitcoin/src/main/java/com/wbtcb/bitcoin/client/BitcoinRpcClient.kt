@@ -4,8 +4,6 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.googlecode.jsonrpc4j.JsonRpcMethod
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
-import com.wbtcb.bitcoin.dto.BitcoinFeeEstimateMode
-import com.wbtcb.bitcoin.dto.BitcoinQueryOptions
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
@@ -58,8 +56,7 @@ interface BitcoinRpcClient {
         minConfirmations: Long? = null,
         maxConfirmations: Long? = null,
         addresses: List<String>? = null,
-        includeUnsafe: Boolean? = null,
-        queryOptions: BitcoinQueryOptions? = null
+        includeUnsafe: Boolean? = null
     ): List<BitcoinUnspentTransaction>
 
     @JsonRpcMethod("sendtoaddress")
@@ -71,8 +68,7 @@ interface BitcoinRpcClient {
         commentTo: String? = null,
         subtractFee: Boolean? = null,
         replaceable: Boolean? = null,
-        minConfirmations: Int? = null,
-        feeEstimateMode: BitcoinFeeEstimateMode? = null
+        minConfirmations: Int? = null
     ): String
 
     @JsonRpcMethod("listtransactions")

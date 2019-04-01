@@ -1,18 +1,24 @@
 package com.wbtcb.core.dto
 
+import com.wbtcb.core.enum.TransactionType
 import java.math.BigDecimal
 import java.util.Date
 
 data class Transaction(
-    var txId: String = "",
-    var address: String = "",
-    var amount: BigDecimal = BigDecimal.ZERO,
-    var fee: BigDecimal? = null,
-    var vout: Int = 0,
-    var confirmations: Long? = null,
-    var blockHash: String? = null,
-    var blockIndex: Long? = null,
-    var blockTime: Date? = null,
-    var time: Date? = null,
-    var timeReceived: Date? = null
+    val txId: String,
+    val address: String,
+    val type: TransactionType,
+    val amount: BigDecimal,
+    val fee: BigDecimal?,
+    val vout: Int = 0,
+    val confirmations: Long,
+    val blockHash: String,
+    val blockIndex: Long,
+    val comment: String?,
+    val commentTo: String?,
+    val otherAccount: String?,
+    val time: Date,
+    val blockTime: Date,
+    val timeReceived: Date,
+    val walletConflicts: List<String>
 )

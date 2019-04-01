@@ -1,14 +1,24 @@
 package com.wbtcb.bitcoin.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BitcoinTransactionInfoDetail(
-    val address: String? = null,
-    val amount: BigDecimal = BigDecimal.ZERO,
-    val category: BitcoinCategoryType? = null,
-    val fee: BigDecimal? = null,
-    val vout: Long = 0
+
+    @JsonProperty("address")
+    val address: String,
+
+    @JsonProperty("amount")
+    val amount: BigDecimal,
+
+    @JsonProperty("category")
+    val category: BitcoinCategoryType,
+
+    @JsonProperty("fee")
+    val fee: BigDecimal?,
+
+    @JsonProperty("vout")
+    val vout: Long
 )

@@ -18,6 +18,10 @@
       <module name="cz.smdev.xwallet-client.test" target="1.8" />
       <module name="cz.smdev.xwallet-core.main" target="1.8" />
       <module name="cz.smdev.xwallet-core.test" target="1.8" />
+      <module name="xwallet-client.xwallet-bitcoin.main" target="1.8" />
+      <module name="xwallet-client.xwallet-bitcoin.test" target="1.8" />
+      <module name="xwallet-client.xwallet-core.main" target="1.8" />
+      <module name="xwallet-client.xwallet-core.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
