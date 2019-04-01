@@ -32,10 +32,10 @@ data class BitcoinTransaction(
     val confirmations: Long,
 
     @JsonProperty("blockhash")
-    val blockHash: String,
+    val blockHash: String?,
 
     @JsonProperty("blockindex")
-    val blockIndex: Long,
+    val blockIndex: Long?,
 
     @JsonProperty("comment")
     val comment: String?,
