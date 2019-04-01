@@ -18,7 +18,7 @@ data class Transaction(
     val commentTo: String?,
     val otherAccount: String?,
     val time: Date,
-    val blockTime: Date,
+    val blockTime: Date?,
     val timeReceived: Date,
     val walletConflicts: List<String>
 )

@@ -13,7 +13,7 @@ data class TransactionInfo(
     val comment: String?,
     val commentTo: String?,
     val time: Date,
-    val blockTime: Date,
+    val blockTime: Date?,
     val timeReceived: Date,
     val walletConflicts: List<String>,
     val inputs: List<TransactionInput> = emptyList(),

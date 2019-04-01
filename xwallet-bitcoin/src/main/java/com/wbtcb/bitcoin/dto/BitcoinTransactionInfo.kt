@@ -41,7 +41,7 @@ data class BitcoinTransactionInfo(
 
     @JsonProperty("blocktime")
     @JsonDeserialize(using = UnixTimestampDeserializer::class)
-    val blockTime: Date,
+    val blockTime: Date?,
 
     @JsonProperty("timereceived")
     @JsonDeserialize(using = UnixTimestampDeserializer::class)
