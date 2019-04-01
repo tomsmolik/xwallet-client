@@ -7,10 +7,6 @@ abstract class BaseWalletCore : WalletCore {
     override fun walletSpecification(): WalletCoreSpecification = walletSpecification
 
     override fun applySpecification(walletSpecification: WalletCoreSpecification?) {
-        walletSpecification?.let {
-            this.walletSpecification = walletSpecification
-        } ?: run {
-            this.walletSpecification = defaultWalletSpecification()
-        }
+        this.walletSpecification = walletSpecification ?: defaultWalletSpecification()
     }
 }
