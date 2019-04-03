@@ -10,5 +10,5 @@ data class BitcoinAddressValidation(
     val isValid: Boolean,
 
     @JsonProperty("address")
-    val address: String
+    val address: String?
 )
