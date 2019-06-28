@@ -22,7 +22,9 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
                 spec.password,
                 spec.host,
                 spec.port,
-                spec.https
+                spec.https,
+                spec.connectionTimeoutMillis,
+                spec.readTimeoutMillis
             )
         }
     }
