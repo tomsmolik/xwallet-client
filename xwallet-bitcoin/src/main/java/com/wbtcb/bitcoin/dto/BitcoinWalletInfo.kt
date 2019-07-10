@@ -23,16 +23,16 @@ data class BitcoinWalletInfo(
     val immatureBalance: BigDecimal,
 
     @JsonProperty("txcount")
-    val txCount: Long,
+    val txCount: Long = 0,
 
     @JsonProperty("keypoololdest")
-    val keyPoolOldest: Long,
+    val keyPoolOldest: Long = 0,
 
     @JsonProperty("keypoolsize")
-    val keyPoolSize: Long,
+    val keyPoolSize: Long = 0,
 
     @JsonProperty("keypoolsize_hd_internal")
-    val keyPoolSizeHdInternal: Long,
+    val keyPoolSizeHdInternal: Long = 0,
 
     @JsonProperty("unlocked_until")
     val unlockedUntil: Long,
@@ -41,5 +41,5 @@ data class BitcoinWalletInfo(
     val payTxFee: BigDecimal?,
 
     @JsonProperty("hdmasterkeyid")
-    val hdMasterKeyId: String
+    val hdMasterKeyId: String?
 )
