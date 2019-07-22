@@ -5,6 +5,7 @@ import com.wbtcb.bitcoin.dto.BitcoinCategoryType.Companion.toTransactionType
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.core.WalletCore
+import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.TransactionInput
@@ -37,6 +38,17 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
                 keyPoolSizeHdInternal = info.keyPoolSizeHdInternal,
                 unlockedUntil = info.unlockedUntil,
                 payTxFee = info.payTxFee
+            )
+        }
+    }
+
+    override fun getNetworkInfo(): NetworkInfo {
+        getBitcoinNetworkInfo().let { info ->
+            return NetworkInfo(
+                version = info.version,
+                subversion = info.subversion,
+                protocolVersion = info.protocolVersion,
+                connections = info.connections
             )
         }
     }

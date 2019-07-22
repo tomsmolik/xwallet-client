@@ -5,6 +5,7 @@ import com.wbtcb.core.WalletCore
 import com.wbtcb.core.service.BaseWalletCoreService
 import com.wbtcb.bitcoin.client.BitcoinRpcClientFactory
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
@@ -51,6 +52,15 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     fun getBitcoinWalletInfo(): BitcoinWalletInfo {
         try {
             return client.getWalletInfo()
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun getBitcoinNetworkInfo(): BitcoinNetworkInfo {
+        try {
+            return client.getNetworkInfo()
         } catch (ex: JsonRpcClientException) {
             throw BitcoinWalletException(ex.code, ex)
         }

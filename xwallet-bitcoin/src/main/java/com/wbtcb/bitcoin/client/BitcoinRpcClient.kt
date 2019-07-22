@@ -4,6 +4,7 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.googlecode.jsonrpc4j.JsonRpcMethod
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
@@ -17,6 +18,10 @@ interface BitcoinRpcClient {
     @JsonRpcMethod("getwalletinfo")
     @Throws(exceptionClasses = [JsonRpcClientException::class])
     fun getWalletInfo(): BitcoinWalletInfo
+
+    @JsonRpcMethod("getnetworkinfo")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun getNetworkInfo(): BitcoinNetworkInfo
 
     @JsonRpcMethod("walletpassphrase")
     @Throws(exceptionClasses = [JsonRpcClientException::class])

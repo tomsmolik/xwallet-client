@@ -1,5 +1,6 @@
 package com.wbtcb.core.service.wallet
 
+import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.WalletInfo
@@ -16,6 +17,17 @@ interface WalletCoreService {
      */
     @Throws(WalletCoreException::class)
     fun getWalletInfo(): WalletInfo {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Provides information about the network.
+     *
+     * @return information about the network
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(WalletCoreException::class)
+    fun getNetworkInfo(): NetworkInfo {
         throw NotImplementedError()
     }
 
