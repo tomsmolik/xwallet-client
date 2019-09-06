@@ -1,5 +1,7 @@
 package com.wbtcb.bitcoin.service
 
+import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
+import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType.Companion.toTransactionType
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
@@ -139,6 +141,39 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
 
     override fun keyPoolRefill() {
         bitcoinKeyPoolRefill()
+    }
+
+    override fun replaceByFees(txId: String, confTarget: BigDecimal?, totalFee: BigDecimal?): String {
+        // init options params
+        val options = BitcoinBumpFeeOptions()
+        if (confTarget != null) {
+            options.confTarget = confTarget
+        }
+        if (totalFee != null) {
+            options.totalFee = totalFee
+        }
+
+        return bumpBitcoinFee(
+            txId = txId,
+            options = options
+        ).txId!!
+    }
+
+    override fun childPaysForParent(transactionInputs: List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>, amount: BigDecimal, address: String): String {
+        // prepare output
+        val addressOutput = BitcoinAddressOutput()
+        addressOutput.address[address] = amount
+
+        // createrawtransaction
+        val txId = createBitcoinRawTransaction(
+            inputs = transactionInputs,
+            outputs = listOf(addressOutput)
+        )
+        // sign transaction and send
+        return sendBitcoinRawTransaction(
+            txId = signBitcoinRawTransaction(txId),
+            allowHighFees = true
+        )
     }
 
     private fun getTransactionInputs(details: List<BitcoinTransactionInfoDetail>?): List<TransactionInput> {

@@ -2,14 +2,19 @@ package com.wbtcb.bitcoin.client
 
 import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.googlecode.jsonrpc4j.JsonRpcMethod
+import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
+import com.wbtcb.bitcoin.dto.BitcoinReplaceByFeesResult
+import com.wbtcb.bitcoin.dto.BitcoinSignResult
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
+import com.wbtcb.core.dto.childPaysForParent.TransactionInput
 
 import java.math.BigDecimal
 
@@ -83,6 +88,33 @@ interface BitcoinRpcClient {
         count: Int? = null,
         from: Int? = null
     ): List<BitcoinTransaction>
+
+    @JsonRpcMethod("bumpfee")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun bumpFee(
+        txId: String,
+        options: BitcoinBumpFeeOptions?
+    ): BitcoinReplaceByFeesResult
+
+    @JsonRpcMethod("createrawtransaction")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun createRawTransaction(
+        inputs: List<TransactionInput>,
+        outputs: List<BitcoinAddressOutput>
+    ): String
+
+    @JsonRpcMethod("signrawtransaction")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun signRawTransaction(
+        txId: String
+    ): BitcoinSignResult
+
+    @JsonRpcMethod("sendrawtransaction")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun sendRawTransaction(
+        txId: String,
+        allowHighFees: Boolean
+    ): String
 
     @JsonRpcMethod("gettransaction")
     @Throws(exceptionClasses = [JsonRpcClientException::class])

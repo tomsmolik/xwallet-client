@@ -4,6 +4,7 @@ import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
 import com.wbtcb.core.dto.WalletInfo
+import com.wbtcb.core.dto.childPaysForParent.TransactionInput
 import com.wbtcb.core.exeption.WalletCoreException
 import java.math.BigDecimal
 
@@ -216,6 +217,33 @@ interface WalletCoreService {
      */
     @Throws(WalletCoreException::class)
     fun keyPoolRefill() {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Replacing one version of an unconfirmed transaction with a different version of the transaction
+     * that pays a higher transaction fee RBF(Replace-By-Fees)
+     * @param txId The txid to be bumped/rplaced
+     * @param confTarget Confirmation target (in blocks)
+     * @param totalFee Total fee (NOT feerate) to pay, in satoshis.
+     * @return txId
+     */
+    @Throws(WalletCoreException::class)
+    fun replaceByFees(txId: String, confTarget: BigDecimal?, totalFee: BigDecimal?): String {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Child Pays for Parent aallows the receiver of a coin transaction to spend the unconfirmed funds they are expecting.
+     * The reason this is helpful is because if you are waiting on a transaction that is stuck because the transaction fees are too low,
+     * you can simply send the unconfirmed funds to a different wallet address, with a higher transaction fee.
+     * @param transactionInputs List of transaction to spend
+     * @param amount Amount of BTC (is reduce by fee)
+     * @param address Where to send coin (destination)
+     * @return txId
+     */
+    @Throws(WalletCoreException::class)
+    fun childPaysForParent(transactionInputs: List<TransactionInput>, amount: BigDecimal, address: String): String {
         throw NotImplementedError()
     }
 }

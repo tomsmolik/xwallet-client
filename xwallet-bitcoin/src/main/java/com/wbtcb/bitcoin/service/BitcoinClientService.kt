@@ -4,14 +4,18 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.wbtcb.core.WalletCore
 import com.wbtcb.core.service.BaseWalletCoreService
 import com.wbtcb.bitcoin.client.BitcoinRpcClientFactory
+import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
+import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
+import com.wbtcb.bitcoin.dto.BitcoinReplaceByFeesResult
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
 import com.wbtcb.bitcoin.exception.BitcoinWalletException
+import com.wbtcb.core.dto.childPaysForParent.TransactionInput
 import java.math.BigDecimal
 
 open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<WalletCore>(wallet) {
@@ -133,6 +137,57 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     fun getBitcoinTransactions(limit: Int, offset: Int): List<BitcoinTransaction> {
         try {
             return client.listTransactions(count = limit, from = offset)
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun bumpBitcoinFee(txId: String, options: BitcoinBumpFeeOptions?): BitcoinReplaceByFeesResult {
+        try {
+            val result = client.bumpFee(txId = txId, options = options)
+            if (result.errors != null && result.errors.isNotEmpty()) {
+                throw BitcoinWalletException(-1, Throwable(result.errors.toString()))
+            }
+            return result
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun createBitcoinRawTransaction(inputs: List<TransactionInput>, outputs: List<BitcoinAddressOutput>): String {
+        try {
+            return client.createRawTransaction(
+                inputs = inputs,
+                outputs = outputs)
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun signBitcoinRawTransaction(txId: String): String {
+        try {
+            val signResult = client.signRawTransaction(
+                txId = txId
+            )
+            if (!signResult.complete) {
+                throw BitcoinWalletException(-1, Throwable("Signing process is incomplete, txId:" + signResult.txId))
+            }
+            return signResult.txId
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun sendBitcoinRawTransaction(txId: String, allowHighFees: Boolean): String {
+        try {
+            return client.sendRawTransaction(
+                txId = txId,
+                allowHighFees = allowHighFees
+            )
         } catch (ex: JsonRpcClientException) {
             throw BitcoinWalletException(ex.code, ex)
         }
