@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class TransactionInput(
-    @JsonProperty("txid")
-    var txId: String,
 
-    var vout: Long?
+    @JsonProperty("txid")
+    var txid: String,
+
+    var vout: Long
 )
