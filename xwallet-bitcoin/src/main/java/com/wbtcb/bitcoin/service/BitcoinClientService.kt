@@ -183,7 +183,7 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     }
 
     @Throws(BitcoinWalletException::class)
-    fun signRawTransactionWithWallet(txId: String): String {
+    fun signBitcoinRawTransactionWithWallet(txId: String): String {
         try {
             val signResult = client.signRawTransactionWithWallet(
                 txId = txId
