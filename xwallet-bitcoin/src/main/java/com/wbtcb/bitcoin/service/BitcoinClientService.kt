@@ -166,10 +166,26 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
         }
     }
 
+    @Deprecated(message = "Signrawtransaction is deprecated and will be fully removed in v0.18")
     @Throws(BitcoinWalletException::class)
     fun signBitcoinRawTransaction(txId: String): String {
         try {
             val signResult = client.signRawTransaction(
+                txId = txId
+            )
+            if (!signResult.complete) {
+                throw BitcoinWalletException(-1, Throwable("Signing process is incomplete, txId:" + signResult.txId))
+            }
+            return signResult.txId
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun signRawTransactionWithWallet(txId: String): String {
+        try {
+            val signResult = client.signRawTransactionWithWallet(
                 txId = txId
             )
             if (!signResult.complete) {

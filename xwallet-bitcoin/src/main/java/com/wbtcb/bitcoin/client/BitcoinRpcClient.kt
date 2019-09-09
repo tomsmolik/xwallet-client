@@ -109,6 +109,12 @@ interface BitcoinRpcClient {
         txId: String
     ): BitcoinSignResult
 
+    @JsonRpcMethod("signrawtransactionwithwallet")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun signRawTransactionWithWallet(
+        txId: String
+    ): BitcoinSignResult
+
     @JsonRpcMethod("sendrawtransaction")
     @Throws(exceptionClasses = [JsonRpcClientException::class])
     fun sendRawTransaction(

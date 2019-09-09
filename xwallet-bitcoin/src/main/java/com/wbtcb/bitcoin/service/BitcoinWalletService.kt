@@ -171,7 +171,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
         )
         // sign transaction and send
         return sendBitcoinRawTransaction(
-            txId = signBitcoinRawTransaction(txId),
+            txId = signRawTransactionWithWallet(txId),
             allowHighFees = true
         )
     }
