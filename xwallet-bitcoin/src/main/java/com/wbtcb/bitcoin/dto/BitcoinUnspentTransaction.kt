@@ -17,5 +17,14 @@ data class BitcoinUnspentTransaction(
     val amount: BigDecimal,
 
     @JsonProperty("confirmations")
-    val confirmations: Int
+    val confirmations: Int,
+
+    @JsonProperty("spendable")
+    val spendable: Boolean,
+
+    @JsonProperty("solvable")
+    val solvable: Boolean,
+
+    @JsonProperty("vout")
+    val vout: Long
 )

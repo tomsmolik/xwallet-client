@@ -6,6 +6,7 @@ import com.wbtcb.bitcoin.dto.BitcoinCategoryType
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType.Companion.toTransactionType
 import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
+import com.wbtcb.bitcoin.exception.BitcoinWalletException
 import com.wbtcb.core.WalletCore
 import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
@@ -14,6 +15,7 @@ import com.wbtcb.core.dto.TransactionInput
 import com.wbtcb.core.dto.TransactionOutput
 import com.wbtcb.core.dto.WalletInfo
 import com.wbtcb.core.service.wallet.WalletCoreService
+import mu.KLogging
 import java.math.BigDecimal
 
 class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), WalletCoreService {
@@ -159,6 +161,68 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
         ).txId!!
     }
 
+    private fun prepareUnspentTransactions(amount: BigDecimal, unspentList: List<BitcoinUnspentTransaction>): Pair<BigDecimal, List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>> {
+        // prepare TransactionInput
+        var transactionInput = mutableListOf<com.wbtcb.core.dto.childPaysForParent.TransactionInput>()
+        var amountTx = BigDecimal.ZERO
+        unspentList.forEach {
+            amountTx += it.amount
+            transactionInput.add(
+                com.wbtcb.core.dto.childPaysForParent.TransactionInput(
+                    txid = it.txId,
+                    vout = it.vout
+                ))
+            if (amountTx >= amount)
+                return Pair(
+                    first = amountTx,
+                    second = transactionInput
+                )
+        }
+        throw BitcoinWalletException(-1, Throwable("Not found unspent  transaction"))
+    }
+
+    private fun approximateFee(txInCount: Int, addOutCount: Int, feeRateAppender: BigDecimal): BigDecimal {
+        // estimate fee rate in BTC/byte
+        val feeRate = estimateSmartFee(1)
+
+        val fee = (feeRate + feeRateAppender) * ((txInCount * 150) + (addOutCount * 63) + 20).toBigDecimal()
+
+        logger.info { "Approximated fee: txInCount= $txInCount, addOutCount=$addOutCount fee=$fee" }
+
+        return fee
+    }
+
+    override fun sendToAddress(address: String, amount: BigDecimal, feeRateAppender: BigDecimal, comment: String?, commentTo: String?): String {
+        // get unspent Transaction
+        val unspentList = getBitcoinUnspentTransactions(emptyList(), 1).filter { it.spendable }
+
+        // prepare inputs
+        val pair = prepareUnspentTransactions(amount, unspentList)
+        val amountTx = pair.first
+        val transactionInputs = pair.second
+
+        // calculate fee
+        val fee = approximateFee(transactionInputs.size, if (amountTx > amount) 2 else 1, feeRateAppender)
+
+        // prepare output
+        val addressOutput = BitcoinAddressOutput()
+        addressOutput.address[address] = amount - fee
+        if (amountTx > amount) {
+            addressOutput.address[getNewAddress()] = amountTx - amount
+        }
+
+        // createrawtransaction
+        val txId = createBitcoinRawTransaction(
+            inputs = transactionInputs,
+            outputs = listOf(addressOutput)
+        )
+        // sign transaction and send
+        return sendBitcoinRawTransaction(
+            txId = signBitcoinRawTransactionWithWallet(txId),
+            allowHighFees = false
+        )
+    }
+
     override fun childPaysForParent(transactionInputs: List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>, amount: BigDecimal, address: String): String {
         // prepare output
         val addressOutput = BitcoinAddressOutput()
@@ -207,4 +271,6 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
     private fun getBalanceFromUnspentTransactions(unspentTransactions: List<BitcoinUnspentTransaction>): BigDecimal {
         return unspentTransactions.map { it.amount }.fold(BigDecimal.ZERO, BigDecimal::add)
     }
+
+    companion object : KLogging()
 }

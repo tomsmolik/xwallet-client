@@ -9,5 +9,6 @@ class TransactionInput(
     @JsonProperty("txid")
     var txid: String,
 
+    @JsonProperty("vout")
     var vout: Long
 )

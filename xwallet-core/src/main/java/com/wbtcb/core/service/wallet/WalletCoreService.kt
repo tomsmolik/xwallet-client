@@ -166,6 +166,22 @@ interface WalletCoreService {
     }
 
     /**
+     * Spends an amount to a given address.
+     *
+     * @param address the address to which the coins should be sent
+     * @param amount the amount to spent
+     * @param feeRateAppender the fee rate appender - constant that change size of fee
+     * @param comment a locally-stored (not broadcast) comment assigned to this transaction
+     * @param commentTo a locally-stored (not broadcast) comment assigned to this transaction.
+     * @return The transaction id of the sent transaction, encoded as hex
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(WalletCoreException::class)
+    fun sendToAddress(address: String, amount: BigDecimal, feeRateAppender: BigDecimal, comment: String? = null, commentTo: String? = null): String {
+        throw NotImplementedError()
+    }
+
+    /**
      * Returns the most recent transactions that affect the wallet.
      *
      * @param limit The number of the most recent transactions to list.
