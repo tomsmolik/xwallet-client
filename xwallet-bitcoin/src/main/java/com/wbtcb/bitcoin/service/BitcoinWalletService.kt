@@ -161,9 +161,9 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
         ).txId!!
     }
 
-    private fun prepareUnspentTransactions(amount: BigDecimal, unspentList: List<BitcoinUnspentTransaction>): Pair<BigDecimal, List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>> {
+    private fun prepareUnspentTransactions(amount: BigDecimal, unspentList: List<BitcoinUnspentTransaction>, feeRateAppender: BigDecimal): Pair<BigDecimal, List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>> {
         // prepare TransactionInput
-        var transactionInput = mutableListOf<com.wbtcb.core.dto.childPaysForParent.TransactionInput>()
+        val transactionInput = mutableListOf<com.wbtcb.core.dto.childPaysForParent.TransactionInput>()
         var amountTx = BigDecimal.ZERO
         unspentList.forEach {
             amountTx += it.amount
@@ -172,7 +172,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
                     txid = it.txId,
                     vout = it.vout
                 ))
-            if (amountTx >= amount)
+            if (amountTx >= amount + approximateFee(transactionInput.size, 2, feeRateAppender))
                 return Pair(
                     first = amountTx,
                     second = transactionInput
@@ -193,23 +193,25 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
     }
 
     override fun sendToAddress(address: String, amount: BigDecimal, feeRateAppender: BigDecimal, comment: String?, commentTo: String?): String {
+        logger.info { "Sent to address  address= $address, amount=$amount feeRateAppender=$feeRateAppender" }
+
         // get unspent Transaction
         val unspentList = getBitcoinUnspentTransactions(emptyList(), 1).filter { it.spendable }
 
         // prepare inputs
-        val pair = prepareUnspentTransactions(amount, unspentList)
+        val pair = prepareUnspentTransactions(amount, unspentList, feeRateAppender)
         val amountTx = pair.first
         val transactionInputs = pair.second
 
         // calculate fee
-        val fee = approximateFee(transactionInputs.size, if (amountTx > amount) 2 else 1, feeRateAppender)
+        val fee = approximateFee(transactionInputs.size, 2, feeRateAppender)
 
         // prepare output
         val addressOutput = BitcoinAddressOutput()
-        addressOutput.address[address] = amount - fee
-        if (amountTx > amount) {
-            addressOutput.address[getNewAddress()] = amountTx - amount
-        }
+        addressOutput.address[address] = amount
+        addressOutput.address[getNewAddress()] = amountTx - amount - fee
+
+        logger.info { "Prepared raw transaction transactionInputs= $transactionInputs, addressOutput=$addressOutput, amountTx=$amountTx, fee=$fee" }
 
         // createrawtransaction
         val txId = createBitcoinRawTransaction(

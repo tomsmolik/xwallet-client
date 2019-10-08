@@ -16,6 +16,7 @@ import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
 import com.wbtcb.bitcoin.exception.BitcoinWalletException
 import com.wbtcb.core.dto.childPaysForParent.TransactionInput
+import mu.KLogging
 import java.math.BigDecimal
 
 open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<WalletCore>(wallet) {
@@ -157,6 +158,7 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
 
     @Throws(BitcoinWalletException::class)
     fun createBitcoinRawTransaction(inputs: List<TransactionInput>, outputs: List<BitcoinAddressOutput>): String {
+        logger.info { "Create raw transaction inputs= $inputs, outputs=$outputs" }
         try {
             return client.createRawTransaction(
                 inputs = inputs,
@@ -169,6 +171,7 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     @Deprecated(message = "Signrawtransaction is deprecated and will be fully removed in v0.18")
     @Throws(BitcoinWalletException::class)
     fun signBitcoinRawTransaction(txId: String): String {
+        logger.info { "Sign raw transaction txId= $txId" }
         try {
             val signResult = client.signRawTransaction(
                 txId = txId
@@ -244,4 +247,6 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
             throw BitcoinWalletException(ex.code, ex)
         }
     }
+
+    companion object : KLogging()
 }
