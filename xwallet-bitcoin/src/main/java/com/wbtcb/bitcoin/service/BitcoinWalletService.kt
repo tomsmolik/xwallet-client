@@ -1,6 +1,5 @@
 package com.wbtcb.bitcoin.service
 
-import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
 import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType
 import com.wbtcb.bitcoin.dto.BitcoinCategoryType.Companion.toTransactionType
@@ -207,15 +206,15 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
         val fee = approximateFee(transactionInputs.size, 2, feeRateAppender)
 
         // prepare output
-        val addressOutput = BitcoinAddressOutput()
-        addressOutput.address.add(hashMapOf(address to amount))
-        addressOutput.address.add(hashMapOf(getNewAddress() to amountTx - amount - fee))
+        val addressOutput = mutableListOf<HashMap<String, BigDecimal>>()
+        addressOutput.add(hashMapOf(address to amount))
+        addressOutput.add(hashMapOf(getNewAddress() to amountTx - amount - fee))
         logger.info { "Prepared raw transaction transactionInputs= $transactionInputs, addressOutput=$addressOutput, amountTx=$amountTx, fee=$fee" }
 
         // createrawtransaction
         val txId = createBitcoinRawTransaction(
             inputs = transactionInputs,
-            outputs = listOf(addressOutput)
+            outputs = addressOutput
         )
         // sign transaction and send
         return sendBitcoinRawTransaction(
@@ -226,13 +225,13 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
 
     override fun childPaysForParent(transactionInputs: List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>, amount: BigDecimal, address: String): String {
         // prepare output
-        val addressOutput = BitcoinAddressOutput()
-        addressOutput.address.add(hashMapOf(address to amount))
+        val addressOutput = mutableListOf<HashMap<String, BigDecimal>>()
+        addressOutput.add(hashMapOf(address to amount))
 
         // createrawtransaction
         val txId = createBitcoinRawTransaction(
             inputs = transactionInputs,
-            outputs = listOf(addressOutput)
+            outputs = addressOutput
         )
         // sign transaction and send
         return sendBitcoinRawTransaction(

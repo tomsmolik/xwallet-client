@@ -4,7 +4,6 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.wbtcb.core.WalletCore
 import com.wbtcb.core.service.BaseWalletCoreService
 import com.wbtcb.bitcoin.client.BitcoinRpcClientFactory
-import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
 import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
@@ -157,7 +156,7 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     }
 
     @Throws(BitcoinWalletException::class)
-    fun createBitcoinRawTransaction(inputs: List<TransactionInput>, outputs: List<BitcoinAddressOutput>): String {
+    fun createBitcoinRawTransaction(inputs: List<TransactionInput>, outputs: List<HashMap<String, BigDecimal>>): String {
         logger.info { "Create raw transaction inputs= $inputs, outputs=$outputs" }
         try {
             return client.createRawTransaction(

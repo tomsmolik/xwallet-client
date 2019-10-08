@@ -2,7 +2,6 @@ package com.wbtcb.bitcoin.client
 
 import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.googlecode.jsonrpc4j.JsonRpcMethod
-import com.wbtcb.bitcoin.dto.BitcoinAddressOutput
 
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
 import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
@@ -100,7 +99,7 @@ interface BitcoinRpcClient {
     @Throws(exceptionClasses = [JsonRpcClientException::class])
     fun createRawTransaction(
         inputs: List<TransactionInput>,
-        outputs: List<BitcoinAddressOutput>
+        outputs: List<HashMap<String, BigDecimal>>
     ): String
 
     @JsonRpcMethod("signrawtransaction")
