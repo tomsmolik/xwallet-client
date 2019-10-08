@@ -208,9 +208,8 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
 
         // prepare output
         val addressOutput = BitcoinAddressOutput()
-        addressOutput.address[address] = amount
-        addressOutput.address[getNewAddress()] = amountTx - amount - fee
-
+        addressOutput.address.add(hashMapOf(address to amount))
+        addressOutput.address.add(hashMapOf(getNewAddress() to amountTx - amount - fee))
         logger.info { "Prepared raw transaction transactionInputs= $transactionInputs, addressOutput=$addressOutput, amountTx=$amountTx, fee=$fee" }
 
         // createrawtransaction
@@ -228,7 +227,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
     override fun childPaysForParent(transactionInputs: List<com.wbtcb.core.dto.childPaysForParent.TransactionInput>, amount: BigDecimal, address: String): String {
         // prepare output
         val addressOutput = BitcoinAddressOutput()
-        addressOutput.address[address] = amount
+        addressOutput.address.add(hashMapOf(address to amount))
 
         // createrawtransaction
         val txId = createBitcoinRawTransaction(
