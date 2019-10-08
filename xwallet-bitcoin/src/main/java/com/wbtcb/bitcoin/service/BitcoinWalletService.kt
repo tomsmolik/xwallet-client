@@ -187,7 +187,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
 
         val fee = (feeRate + feeRateAppender) * ((txInCount * 150) + (addOutCount * 63) + 20).toBigDecimal()
 
-        logger.info { "Approximated fee: txInCount= $txInCount, addOutCount=$addOutCount fee=$fee" }
+        logger.info { "Approximated fee: feeRate=$feeRate, txInCount= $txInCount, addOutCount=$addOutCount fee=$fee" }
 
         return fee
     }
