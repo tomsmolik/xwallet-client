@@ -178,7 +178,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
                     second = transactionInput
                 )
         }
-        throw BitcoinWalletException(-1, Throwable("Not found unspent  transaction"))
+        throw BitcoinWalletException(-1, Throwable("Not found enough unspent transaction amountTx=$amountTx"))
     }
 
     private fun approximateFee(txInCount: Int, addOutCount: Int, feeRateAppender: BigDecimal): BigDecimal {
