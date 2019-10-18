@@ -1,5 +1,5 @@
 # xwallet
-[![](https://jitpack.io/v/tomsmolik/xwallet-client.svg?label=Release)](https://jitpack.io/#tomsmolik/xwallet-client)
+[![](https://jitpack.io/v/wbtcb/xwallet-client.svg?label=Release)](https://jitpack.io/#wbtcb/xwallet-client)
 
 Kotlin library providing a simple abstract API for interacting with multiple crypto wallet core.
 
@@ -27,7 +27,7 @@ Kotlin library providing a simple abstract API for interacting with multiple cry
 	}
     
 	dependencies {
-	        implementation 'com.github.tomsmolik:xwallet-client:$version'
+	        implementation 'com.github.wbtcb:xwallet-client:$version'
 	}
 ```
 ## Maven dependencies:
@@ -41,7 +41,7 @@ Kotlin library providing a simple abstract API for interacting with multiple cry
 	</repositories>
     
 	<dependency>
-	    <groupId>com.github.tomsmolik</groupId>
+	    <groupId>com.github.wbtcb</groupId>
 	    <artifactId>xwallet-client</artifactId>
 	    <version>version</version>
 	</dependency>
