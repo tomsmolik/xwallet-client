@@ -1,5 +1,6 @@
 package com.wbtcb.core.service.wallet
 
+import com.wbtcb.core.dto.Address
 import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
@@ -191,6 +192,30 @@ interface WalletCoreService {
      */
     @Throws(WalletCoreException::class)
     fun getTransactions(limit: Int, offset: Int): List<Transaction> {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Lists groups of addresses which have had their common ownership
+     * made public by common use as inputs or as the resulting change
+     * in past transactions.
+     *
+     * @return Lists groups of addresses
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(WalletCoreException::class)
+    fun getAddressGroupings(): List<List<Address>> {
+        throw NotImplementedError()
+    }
+
+    /**
+     * Returns list of addresses.
+     *
+     * @return List of addresses
+     * @throws WalletCoreException indication that a networking error occurred while fetching JSON data
+     */
+    @Throws(WalletCoreException::class)
+    fun getAddresses(): List<Address> {
         throw NotImplementedError()
     }
 

@@ -7,6 +7,7 @@ import com.wbtcb.bitcoin.dto.BitcoinTransactionInfoDetail
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.exception.BitcoinWalletException
 import com.wbtcb.core.WalletCore
+import com.wbtcb.core.dto.Address
 import com.wbtcb.core.dto.NetworkInfo
 import com.wbtcb.core.dto.Transaction
 import com.wbtcb.core.dto.TransactionInfo
@@ -112,6 +113,34 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
                 timeReceived = transaction.timeReceived,
                 walletConflicts = transaction.walletConflicts
             )
+        }
+    }
+
+    override fun getAddressGroupings(): List<List<Address>> {
+        return getBitcoinAddresses().map { groups ->
+            groups.map { group ->
+                Address(
+                    group.address,
+                    group.amount,
+                    group.label
+                )
+            }
+        }
+    }
+
+    override fun getAddresses(): List<Address> {
+        return mutableListOf<Address>().apply {
+            getBitcoinAddresses().map { groups ->
+                groups.map { group ->
+                    this.add(
+                        Address(
+                            group.address,
+                            group.amount,
+                            group.label
+                        )
+                    )
+                }
+            }
         }
     }
 

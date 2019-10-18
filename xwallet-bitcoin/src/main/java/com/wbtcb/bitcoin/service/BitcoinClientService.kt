@@ -4,6 +4,7 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.wbtcb.core.WalletCore
 import com.wbtcb.core.service.BaseWalletCoreService
 import com.wbtcb.bitcoin.client.BitcoinRpcClientFactory
+import com.wbtcb.bitcoin.dto.BitcoinAddress
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
 import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
@@ -137,6 +138,23 @@ open class BitcoinClientService(wallet: WalletCore) : BaseWalletCoreService<Wall
     fun getBitcoinTransactions(limit: Int, offset: Int): List<BitcoinTransaction> {
         try {
             return client.listTransactions(count = limit, from = offset)
+        } catch (ex: JsonRpcClientException) {
+            throw BitcoinWalletException(ex.code, ex)
+        }
+    }
+
+    @Throws(BitcoinWalletException::class)
+    fun getBitcoinAddresses(): List<List<BitcoinAddress>> {
+        try {
+            return client.listAddressGroupings().map { groups ->
+                groups.map { group ->
+                    BitcoinAddress(
+                        address = group[0] as String,
+                        amount = BigDecimal(group[1] as Double).setScale(8, BigDecimal.ROUND_HALF_UP),
+                        label = if (group.size > 2) group[2] as String? else null
+                    )
+                }
+            }
         } catch (ex: JsonRpcClientException) {
             throw BitcoinWalletException(ex.code, ex)
         }
