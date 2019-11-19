@@ -181,10 +181,10 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
     }
 
     private fun approximateFee(txInCount: Int, addOutCount: Int, feeRateAppender: BigDecimal): BigDecimal {
-        // estimate fee rate in BTC/byte (switch to Byte)
+        // estimate fee rate in BTC/byte (switch KByte to Byte)
         val feeRate = estimateSmartFee(1).divide(1000.toBigDecimal())
 
-        val fee = (feeRate + feeRateAppender) * ((txInCount * 150) + (addOutCount * 63) + 20).toBigDecimal()
+        val fee = (feeRate + feeRateAppender) * ((txInCount * 150) + (addOutCount * 63) + 20).toBigDecimal().setScale(8)
 
         logger.info { "Approximated fee: feeRate=$feeRate, txInCount= $txInCount, addOutCount=$addOutCount fee=$fee" }
 
