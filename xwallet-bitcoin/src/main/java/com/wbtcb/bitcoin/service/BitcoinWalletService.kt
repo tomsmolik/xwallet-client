@@ -238,7 +238,7 @@ class BitcoinWalletService(wallet: WalletCore) : BitcoinClientService(wallet), W
         // prepare output
         val addressOutput = mutableListOf<HashMap<String, BigDecimal>>()
         addressOutput.add(hashMapOf(address to amount))
-        addressOutput.add(hashMapOf(getNewAddress() to amountTx - amount - fee))
+        addressOutput.add(hashMapOf(getNewAddress() to (amountTx - amount - fee).stripTrailingZeros()))
         logger.info { "Prepared raw transaction transactionInputs= $transactionInputs, addressOutput=$addressOutput, amountTx=$amountTx, fee=$fee" }
 
         // createrawtransaction
