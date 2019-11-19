@@ -2,7 +2,6 @@ package com.wbtcb.bitcoin.client
 
 import com.googlecode.jsonrpc4j.JsonRpcClientException
 import com.googlecode.jsonrpc4j.JsonRpcMethod
-
 import com.wbtcb.bitcoin.dto.BitcoinAddressValidation
 import com.wbtcb.bitcoin.dto.BitcoinBumpFeeOptions
 import com.wbtcb.bitcoin.dto.BitcoinNetworkInfo
@@ -10,11 +9,10 @@ import com.wbtcb.bitcoin.dto.BitcoinReplaceByFeesResult
 import com.wbtcb.bitcoin.dto.BitcoinSignResult
 import com.wbtcb.bitcoin.dto.BitcoinSmartFee
 import com.wbtcb.bitcoin.dto.BitcoinTransaction
+import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.bitcoin.dto.BitcoinUnspentTransaction
 import com.wbtcb.bitcoin.dto.BitcoinWalletInfo
-import com.wbtcb.bitcoin.dto.BitcoinTransactionInfo
 import com.wbtcb.core.dto.childPaysForParent.TransactionInput
-
 import java.math.BigDecimal
 
 interface BitcoinRpcClient {
@@ -87,6 +85,10 @@ interface BitcoinRpcClient {
         count: Int? = null,
         from: Int? = null
     ): List<BitcoinTransaction>
+
+    @JsonRpcMethod("listaddressgroupings")
+    @Throws(exceptionClasses = [JsonRpcClientException::class])
+    fun listAddressGroupings(): List<List<List<Any>>>
 
     @JsonRpcMethod("bumpfee")
     @Throws(exceptionClasses = [JsonRpcClientException::class])
